@@ -9,7 +9,7 @@ killall lemonbar
 monitor_width=1920
 
 gap_top=10
-gap_sides=50
+gap_sides=400
 width=$((1920 - $gap_sides*2))
 height=25
 
