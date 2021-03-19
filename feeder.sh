@@ -5,7 +5,7 @@ bg_color="#282a36"
 fg_color="#f8f8f2"
 
 clock() {
-    time=$(date "+%Y %b %d (%a) %I:%M%p")
+    time=$(date "+%a %d %b %Y %I:%M%p")
     echo -e "%{F${bg_color}}%{B${fg_color}}  $time %{F-}%{B-}"
 }
 
