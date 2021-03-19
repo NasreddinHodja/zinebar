@@ -3,7 +3,7 @@
 source ./feeder.sh
 
 workspaces() {
-    echo -e "$(./workspaces.py HDMI-0)"
+    echo -e "$(./workspaces.py eDP-1-1)"
 }
 
 bar_out() {

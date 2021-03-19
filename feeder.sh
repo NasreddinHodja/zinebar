@@ -64,13 +64,19 @@ volume() {
     # # - Scroll to change."
     # esac
 
+    mute="amixer sset Master toggle"
+    vol_up="amixer sset Master 2%+ >/dev/null 2>/dev/null"
+    vol_down="amixer sset Master 2%- >/dev/null 2>/dev/null"
+
     volstat="$(amixer get Master)"
 
     echo "$volstat" | grep "\[off\]" >/dev/null && printf "muted\\n" && exit
 
     vol=$(echo "$volstat" | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q")
 
-    echo "%{F$bg_color}%{B$fg_color}  $vol% %{F-}%{B-}"
+    echo "%{A:$mute:}%{F$bg_color}%{B$fg_color}  $vol% %{F-}%{B-}%{A}"
+    # echo "%{A:$mute}%{A4:$vol_up}%{A5:$vol_down}%{F$bg_color}%{B$fg_color}  $vol% %{F-}%{B-}%{A}%{A}%{A}"
+    # echo "%{F$bg_color}%{B$fg_color}  $vol% %{F-}%{B-}"
 }
 
 internet() {
@@ -104,32 +110,3 @@ storage() {
 home() {
     echo $(disk /home )
 }
-
-workspaces() {
-    echo -e "$(./workspaces.py eDP-1-1)"
-}
-
-bar_out() {
-    echo -e "%{l}$(workspaces)%{r}$(home) $(storage) $(ram) $(internet) $(volume) $(brightness) $(battery) $(clock)"
-}
-
-# # multiple monitors
-# monitors=$(xrandr | grep -o "^.* connected" | sed "s/ connected//")
-
-# while true; do
-#     tmp=0
-#     barout=""
-#     for monitor in $(echo $monitors); do
-#         barout+="%{S${tmp}}$(bar_out)"
-#         ((tmp++))
-#     done
-
-#     echo $barout
-
-#     sleep 0.1s
-# done
-
-while true; do
-    bar_out
-    sleep 0.1s
-done

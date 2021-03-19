@@ -1,4 +1,4 @@
-##!/bin/bash
+#!/bin/bash
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
@@ -6,15 +6,16 @@ cd "$parent_path"
 
 killall lemonbar
 
-monitor_width=1920
+# there must be a better way to do this
+monitor_width=$(xrandr | grep connected | head -n 1 | cut -d " " -f 3 | cut -d "x" -f 1)
 
 gap_top=10
 gap_sides=400
 width=$((1920 - $gap_sides*2))
 height=25
 
-# main bar
-./main_feeder.sh | lemonbar -d \
+# primary bar
+./primary_feeder.sh | lemonbar -d \
     -f 'Source Code Pro:size=10' \
     -f 'FontAwesome' \
     -p \
